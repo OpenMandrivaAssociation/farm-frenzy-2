@@ -1,0 +1,86 @@
+#!/bin/sh
+# Remove unnecessary wine components in per-app environments
+if ! [ -d drive_c ]; then
+	echo "Please run this script from the directory containing the drive_c directory"
+	echo "of the wine installation you want to trim"
+	exit 1
+fi
+for i in "$@"; do
+	[ "$i" = "--keep-mono" ] && KEEP_MONO=1
+	[ "$i" = "--keep-winhelp" ] && KEEP_WINHELP=1
+	[ "$i" = "--keep-notepad" ] && KEEP_NOTEPAD=1
+	[ "$i" = "--keep-regedit" ] && KEEP_REGEDIT=1
+	[ "$i" = "--keep-twain" ] && KEEP_TWAIN=1
+	[ "$i" = "--keep-explorer" ] && KEEP_EXPLORER=1
+	[ "$i" = "--keep-cards" ] && KEEP_CARDS=1
+	[ "$i" = "--keep-wscript" ] && KEEP_WSCRIPT=1
+done
+
+rm -f dosdevices/a: dosdevices/d: dosdevices/z: dosdevices/com*
+rm -rf drive_c/users
+[ "$KEEP_MONO" = "1" ] || rm -rf drive_c/windows/Microsoft.NET drive_c/windows/mono
+[ "$KEEP_WINHELP" = "1" ] || rm -f drive_c/windows/winhelp.exe drive_c/windows/winhlp32.exe drive_c/windows/system32/winhlp32.exe
+[ "$KEEP_NOTEPAD" = "1" ] || rm -f drive_c/windows/notepad.exe drive_c/windows/system32/notepad.exe
+[ "$KEEP_TWAIN" = "1" ] || rm -f drive_c/windows/twain*.dll
+[ "$KEEP_EXPLORER" = "1" ] || rm -f drive_c/windows/system32/explorer.exe
+[ "$KEEP_WSCRIPT" = "1" ] || rm -f drive_c/windows/system32/wscript.exe drive_c/windows/system32/cscript.exe
+[ "$KEEP_CARDS" = "1" ] || rm -f drive_c/windows/system32/cards.dll
+rm -f \
+	drive_c/windows/system32/arp.exe \
+	drive_c/windows/system32/attrib.exe \
+	drive_c/windows/system32/cabarc.exe \
+	drive_c/windows/system32/cacls.exe \
+	drive_c/windows/system32/clock.exe \
+	drive_c/windows/system32/cmd.exe \
+	drive_c/windows/system32/conhost.exe \
+	drive_c/windows/system32/control.exe \
+	drive_c/windows/system32/ddhelp.exe \
+	drive_c/windows/system32/dosx.exe \
+	drive_c/windows/system32/dxdiag.exe \
+	drive_c/windows/system32/eject.exe \
+	drive_c/windows/system32/expand.exe \
+	drive_c/windows/system32/extrac32.exe \
+	drive_c/windows/system32/findstr.exe \
+	drive_c/windows/system32/hostname.exe \
+	drive_c/windows/system32/icinfo.exe \
+	drive_c/windows/system32/ipconfig.exe \
+	drive_c/windows/system32/lodctr.exe \
+	drive_c/windows/system32/mshta.exe \
+	drive_c/windows/system32/msiexec.exe \
+	drive_c/windows/system32/net.exe \
+	drive_c/windows/system32/netsh.exe \
+	drive_c/windows/system32/netstat.exe \
+	drive_c/windows/system32/oleview.exe \
+	drive_c/windows/system32/ping.exe \
+	drive_c/windows/system32/plugplay.exe \
+	drive_c/windows/system32/progman.exe \
+	drive_c/windows/system32/reg.exe \
+	drive_c/windows/system32/regsvr32.exe \
+	drive_c/windows/system32/rpcss.exe \
+	drive_c/windows/system32/rundll32.exe \
+	drive_c/windows/system32/sc.exe \
+	drive_c/windows/system32/schtasks.exe \
+	drive_c/windows/system32/secedit.exe \
+	drive_c/windows/system32/services.exe \
+	drive_c/windows/system32/spoolsv.exe \
+	drive_c/windows/system32/svchost.exe \
+	drive_c/windows/system32/taskkill.exe \
+	drive_c/windows/system32/taskmgr.exe \
+	drive_c/windows/system32/termsv.exe \
+	drive_c/windows/system32/uninstaller.exe \
+	drive_c/windows/system32/unlodctr.exe \
+	drive_c/windows/system32/view.exe \
+	drive_c/windows/system32/winecfg.exe \
+	drive_c/windows/system32/wineconsole.exe \
+	drive_c/windows/system32/winedbg.exe \
+	drive_c/windows/system32/winefile.exe \
+	drive_c/windows/system32/winemenubuilder.exe \
+	drive_c/windows/system32/winemine.exe \
+	drive_c/windows/system32/winemsibuilder.exe \
+	drive_c/windows/system32/winepath.exe \
+	drive_c/windows/system32/winver.exe \
+	drive_c/windows/system32/wordpad.exe \
+	drive_c/windows/system32/write.exe \
+	drive_c/windows/system32/xcopy.exe \
+	\
+	drive_c/windows/system32/wing32.dll
